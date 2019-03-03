@@ -113,3 +113,6 @@ The library comes with BenchmarkDotNet tests that show this only adds a small ov
 - [ ] Change design to allow caches to be created more quickly
     - [ ] Profiling of the cache creation code
     - [ ] Determine how to make creation of multiple caches from a single type fast
+- [ ] Packaging and distribution
+    - [ ] Create nuget package
+    - [ ] Figure out how to distribute via Nuget.org etc.
