@@ -100,6 +100,15 @@ Alternatively you can use the library without the "using".
         }
     }
     
+## Design
+The key requirements of the library are
+- speed of store/restore close to that of the hand-rolled version
+- customisability of the properties that are cached
+- simplicity of usage (both configuration and store/restore)
+- robustness
+
+In order to deliver both the speed and customisability a design using Reflection.Emit was chosen. The combination of customisability and speed rules out a solution using only C# types - one early proof of concept used a list of Action objects to perform the restore. This was several orders of magnitude slower than both the Reflection.Emit and hand-rolled versions. 
+
 ## Performance
 The library comes with BenchmarkDotNet tests that show this only adds a small overhead (from an already small base) to the hand-rolled version. The non-using version runs marginally quicker than the using version.
 
