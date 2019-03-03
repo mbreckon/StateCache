@@ -70,8 +70,38 @@ This library changes the code in the motivating examples above to something like
         }
     }
     
+Alternatively you can use the library without the "using".
+
+    public class DrawableEntity
+    {
+        readonly StateCache<StatefulDrawingSystem> stateCache;
+        
+        public DrawableEntity()
+        {
+            stateCache =
+                new StateCacheBuilder<StatefulDrawingSystem>()
+                    .Property("Value1")
+                    .Property("Value2")
+                    .Property("Value3")
+                    .Build();
+        }
+        
+        public void Draw(StatefulGraphicsSystem system)
+        {
+            stateCache.Store(system);
+            
+            system.Value1 = ...;
+            system.Value2 = ...;
+            system.Value3 = ...;
+                
+            system.DrawSomething();
+            
+            stateCache.Restore(system);
+        }
+    }
+    
 ## Performance
-The library comes with BenchmarkDotNet tests that show this only adds a small overhead (from an already small base) to the hand-rolled version.
+The library comes with BenchmarkDotNet tests that show this only adds a small overhead (from an already small base) to the hand-rolled version. The non-using version runs marginally quicker than the using version.
 
 # TODO
 - [ ] Write tests to illuminate weaknesses in Proof of Concept code
