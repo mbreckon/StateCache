@@ -1,6 +1,8 @@
 # StateCache
 This library supports fast and customisable caching of the public properties of an object. The caching object is built dynamically to only include the properties from the object that are required to be cached. This allows the store/restore to only be maginally slower than manually written caching code.
 
+**Warning:** The number of places where this technique should be used are few. Simple get/set properties (i.e. acting as a data bucket) on objects typically indicate poor OO design and hence one would expect the number of places where it makes sense to cache them in this manner to be quite small. The extra effort required to manage state in this manner should only be taken if there is a good performance reason or you are interacting with a third-party library that is designed in that manner (hopefully itself for performance reasons).
+
 ## Motivating Example
 There is form of system design in which state is the primary way in which activities are configured. This is often done for performance reasons - you may not want to set all the properties of the system for every activity, so the state from other activities is "reused" and only changes to the specific state values necessary for configuring the activity at hand are changed.
 
