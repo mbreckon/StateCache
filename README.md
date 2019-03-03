@@ -19,13 +19,17 @@ Often a state change is required locally within a drawing object. In order to en
         system.Color = oldValue;
     }
     
-Sometimes a number of state changes may be made which all require restoring...
+Sometimes a number of state changes are made which all require restoring...
 
-    void Draw(StatefulSystem system)
+    void DoSomething(StatefulSystem system)
     {
         var oldValue1 = system.Value1;
         var oldValue2 = system.Value2;
         var oldValue3 = system.Value3;
+        
+        system.Value1 = ...;
+        system.Value2 = ...;
+        system.Value3 = ...;
         
         system.DoSomething();
         
@@ -35,6 +39,39 @@ Sometimes a number of state changes may be made which all require restoring...
     }
     
 Typically the state properties that need caching are some subset of the overall set of possible state properties. 
+
+## Solution
+This library changes the code in the motivating examples above to something like the following...
+
+    public class DrawableEntity
+    {
+        readonly StateCache<StatefulDrawingSystem> stateCache;
+        
+        public DrawableEntity()
+        {
+            stateCache =
+                new StateCacheBuilder<StatefulDrawingSystem>()
+                    .Property("Value1")
+                    .Property("Value2")
+                    .Property("Value3")
+                    .Build();
+        }
+        
+        public void Draw(StatefulGraphicsSystem system)
+        {
+            using (stateCache.AutoRestoreToPreviousState(system))
+            {
+                system.Value1 = ...;
+                system.Value2 = ...;
+                system.Value3 = ...;
+                
+                system.DrawSomething();
+            }
+        }
+    }
+    
+## Performance
+The library comes with BenchmarkDotNet tests that show this only adds a small overhead (from an already small base) to the hand-rolled version.
 
 # TODO
 - [ ] Write tests to illuminate weaknesses in Proof of Concept code
