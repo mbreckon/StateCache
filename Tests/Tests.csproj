@@ -57,9 +57,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="A state_cache_for_a_class\with_only_methods.cs" />
+    <Compile Include="TestClasses\PublicClassWithOnlyMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="A state_cache_for_a_class\with_no_properties.cs" />
-    <Compile Include="TestClasses\ClassWithNoProperties.cs" />
+    <Compile Include="TestClasses\PublicClassWithNoProperties.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
